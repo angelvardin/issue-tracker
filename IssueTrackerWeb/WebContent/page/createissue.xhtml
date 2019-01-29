@@ -1,0 +1,134 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+<h:head>
+	<link href="#{application.contextPath}/css/common.css" rel="stylesheet"
+		type="text/css" />
+	<link href="#{application.contextPath}/css/bootstrap.css"
+		rel="stylesheet" type="text/css" />
+
+
+
+</h:head>
+<title></title>
+<body>
+	<h:form>
+		<nav class="navbar navbar-default navbar-inverse" role="navigation">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Issue Tracker</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="/IssueTrackerWeb/page/allissues.html">#{msgs['nav.home']}</a></li>
+					<li class="active"><a
+						href="/IssueTrackerWeb/page/createissue.html">#{msgs['nav.createissue']}</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<c:if test="#{allIssuesBean.logon eq false}">
+						<li><a href="/IssueTrackerWeb/page/registeruser.html"><b>#{msgs['button.register']}</b></a>
+						</li>
+						<li><a href="/IssueTrackerWeb/page/login.html"><b>#{msgs['button.login']}</b></a>
+						</li>
+					</c:if>
+					<c:if test="#{allIssuesBean.logon eq true}">
+						<li><p class="navbar-text">#{msgs['hello.message']}</p></li>
+						<li><h:commandLink value="#{msgs['button.logout']}"
+								action="#{loginBean.logout()}" /></li>
+					</c:if>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid --> </nav>
+	</h:form>
+
+	<h:form>
+		<p:outputPanel styleClass="alert alert-danger errorPanel"
+			rendered="#{createIssuesBean.hasErrors()}">
+			<p:messages autoUpdate="false" id="editParamMessages"
+				globalOnly="false" styleClass="messagesStyle" />
+		</p:outputPanel>
+
+
+
+		<p:panel header="#{msgs['panel.title.create.issue']}"
+			style="margin-bottom:10px;">
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<p:outputLabel for="title" value="#{msgs['lable.issue.title']}" />
+				<p:inputText id="title"
+					value="#{createIssuesBean.createIssue.title}" required="true"
+					requiredMessage="#{msgs.code_error_required}">
+					<f:validateLength maximum="400" />
+				</p:inputText>
+
+				<p:outputLabel for="date" value="#{msgs['lable.issue.date']}" />
+				<p:calendar id="date" value="#{createIssuesBean.createIssue.date}"
+					showOn="button" required="true"
+					requiredMessage="#{msgs.code_error_required}">
+
+				</p:calendar>
+
+				<p:outputLabel for="priority"
+					value="#{msgs['lable.issue.Priority']}" />
+				<p:selectOneMenu styleClass="dropdown" id="priority"
+					value="#{createIssuesBean.createIssue.priority}"
+					style="width:150px" required="true"
+					requiredMessage="#{msgs.code_error_required}">
+					<f:selectItem itemValue="#{null}" itemLabel="------- select one -------" />
+					<f:selectItems value="#{editIssuesBean.priorities}" var="priority"
+						itemLabel="#{priority.value}" itemValue="#{priority}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="state" value="#{msgs['lable.issue.state']}" />
+				<p:selectOneMenu styleClass="dropdown" id="state" 
+					value="#{createIssuesBean.createIssue.state}" style="width:150px"
+					required="true" requiredMessage="#{msgs.code_error_required}">
+					<f:selectItem itemValue="#{null}" itemLabel="------- select one -------" />
+					<f:selectItems value="#{editIssuesBean.statuses}" var="state"
+						itemLabel="#{state.value}" itemValue="#{state}" />
+				</p:selectOneMenu>
+
+
+				<p:outputLabel for="project" value="#{msgs['lable.issue.project']}" />
+				<p:selectOneMenu styleClass="dropdown" id="project"
+					value="#{createIssuesBean.createIssue.projectName}" style="width:150px"
+					required="true" requiredMessage="#{msgs.code_error_required}">
+					<f:selectItem itemValue="#{null}" itemLabel="------- select one -------" />
+					<f:selectItems value="#{createIssuesBean.allProjectNames}" />
+				</p:selectOneMenu>
+
+
+				<p:outputLabel value="#{msgs['lable.issue.descr']}" />
+				<p:editor id="descr"
+					value="#{createIssuesBean.createIssue.description}"
+					widgetVar="editor" width="600" required="true"
+					requiredMessage="#{msgs.code_error_required}">
+					<f:validateLength maximum="400"></f:validateLength>
+				</p:editor>
+
+
+			</h:panelGrid>
+
+			<p:separator />
+
+			<p:commandButton ajax="false" value="#{msgs['button.submit']}"
+				action="#{createIssuesBean.update()}" icon="ui-icon-check" />
+		</p:panel>
+	</h:form>
+
+</body>
+</html>

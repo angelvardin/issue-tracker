@@ -1,0 +1,168 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+<h:head>
+
+	<link href="#{application.contextPath}/css/bootstrap.css"
+		rel="stylesheet" type="text/css" />
+
+
+
+</h:head>
+<title>#{msgs['default.title']}</title>
+<body>
+	<h:form>
+		<nav class="navbar navbar-default navbar-inverse" role="navigation">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">#{msgs['site.name']}</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active"><a
+						href="/IssueTrackerWeb/page/allissues.html"><b>#{msgs['nav.home']}</b></a></li>
+					<c:if test="#{loginBean.logged eq true}">
+						<li><a href="/IssueTrackerWeb/page/createissue.html"><b>#{msgs['nav.createissue']}</b></a>
+					</li>
+					</c:if>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<c:if test="#{allIssuesBean.logon eq false}">
+						<li><a href="/IssueTrackerWeb/page/registeruser.html"><b>#{msgs['button.register']}</b></a>
+						</li>
+						<li><a href="/IssueTrackerWeb/page/login.html"><b>#{msgs['button.login']}</b></a>
+						</li>
+					</c:if>
+					<c:if test="#{allIssuesBean.logon eq true}">
+						<li><p class="navbar-text">#{msgs['hello.message']}</p></li>
+						<li><a href="/IssueTrackerWeb/page/edituserinfo.html"><b>#{msgs['button.edit']}</b></a>
+						</li>
+						<li><h:commandLink value="#{msgs['button.logout']}"
+								action="#{loginBean.logout()}" /></li>
+					</c:if>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid --> </nav>
+	</h:form>
+
+
+
+
+	<h:form id="statuses">
+		<h:panelGrid columns="2" cellpadding="5">
+			<p:outputLabel for="status" value="Status:" />
+			<p:selectOneButton id="status" value="#{allIssuesBean.status}"
+				onchange="$('#statuses').submit()">
+				<f:selectItem itemLabel="#{msgs['selectonebutton.all']}" itemValue="all" />
+				<f:selectItem itemLabel="#{msgs['selectonebutton.new']}" itemValue="New" />
+				<f:selectItem itemLabel="#{msgs['selectonebutton.opened']}" itemValue="open" />
+				<f:selectItem itemLabel="#{msgs['selectonebutton.fixed']}" itemValue="fixed" />
+				<f:selectItem itemLabel="#{msgs['selectonebutton.closed']}" itemValue="closed" />
+				<f:selectItem itemLabel="#{msgs['selectonebutton.reopened']}" itemValue="reopen" />
+				<p:ajax />
+			</p:selectOneButton>
+		</h:panelGrid>
+	</h:form>
+
+	<h:form id="form">
+		<p:dataTable var="issue" value="#{allIssuesBean.lazyModel}"
+			paginator="true" rows="10"
+			paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+			rowsPerPageTemplate="5,10,15" selectionMode="single"
+			selection="#{allIssuesBean.seletedIssue}" rowKey="#{issue.id}"
+			lazy="true">
+			<p:ajax event="rowSelect" listener="#{allIssuesBean.onRowSelect}"
+				update=":form:issueDetails" oncomplete="PF('issueDialog').show()" />
+			<p:column headerText="#{msgs['issues.table.id']}" sortBy="#{issue.id}" filterBy="#{issue.id}"
+				visible="false">
+				<h:outputText value="#{issue.id}" />
+			</p:column>
+			<p:column headerText="#{msgs['issues.table.title']}" sortBy="#{issue.title}"
+				filterBy="#{issue.title}">
+				<h:outputText value="#{issue.title}" />
+			</p:column>
+			<p:column headerText="#{msgs['issues.table.date']}" sortBy="#{issue.date}"
+				filterBy="#{issue.date}">
+				<h:outputText value="#{issue.date}" />
+			</p:column>
+			<p:column headerText="#{msgs['issues.table.project']}" sortBy="#{issue.projectName}"
+				filterBy="#{issue.projectName}">
+				<h:outputText value="#{issue.projectName}" />
+			</p:column>
+			<p:column headerText="#{msgs['issues.table.user']}" sortBy="#{issue.submittedBy}"
+				filterBy="#{issue.submittedBy}">
+				<h:outputText value="#{issue.submittedBy}" />
+			</p:column>
+			<p:column headerText="#{msgs['issues.table.priority']}" sortBy="#{issue.priority}"
+				filterBy="#{issue.priority}">
+				<h:outputText value="#{issue.priority}" />
+			</p:column>
+			<p:column headerText="#{msgs['issues.table.actions']}">
+				<p:commandButton value="#{msgs['issues.table.button.details']}" 
+					action="#{detailsIssuesBean.details(issue)}" ajax="false" />
+
+				<p:commandButton value="#{msgs['issues.table.button.edit']}" action="#{editIssuesBean.edit(issue)}"
+					rendered="#{loginBean.logged}">
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+
+		<p:dialog header="#{msgs['issues.table.popup.header']}" widgetVar="issueDialog" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="false">
+			<p:outputPanel id="issueDetails" style="text-align:center;">
+				<p:panelGrid columns="2"
+					rendered="#{not empty allIssuesBean.seletedIssue}"
+					columnClasses="label,value">
+					<f:facet name="header">
+
+					</f:facet>
+
+					<h:outputText value="#{msgs['issues.table.id']}" />
+					<h:outputText value="#{allIssuesBean.seletedIssue.id}" />
+
+					<h:outputText value="#{msgs['issues.table.project']}" />
+					<h:outputText value="#{allIssuesBean.seletedIssue.projectName}" />
+
+					<h:outputText value="#{msgs['issues.table.user']}" />
+					<h:outputText value="#{allIssuesBean.seletedIssue.submittedBy}" />
+
+
+					<h:outputText value="#{msgs['issues.table.date']}" />
+					<h:outputText value="#{allIssuesBean.seletedIssue.date}">
+					</h:outputText>
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+
+
+
+</body>
+<script type="text/javascript">
+    function handleLoginRequest(xhr, status, args) {
+        if(args.validationFailed || !args.loggedIn) {
+            PF('dlg').jq.effect("shake", {times:5}, 100);
+        }
+        else {
+            PF('dlg').hide();
+            $('#loginLink').fadeOut();
+        }
+    }
+</script>
+
+
+</html>

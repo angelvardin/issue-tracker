@@ -1,0 +1,170 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+<h:head>
+	<link href="#{application.contextPath}/css/common.css" rel="stylesheet"
+		type="text/css" />
+	<link href="#{application.contextPath}/css/bootstrap.css"
+		rel="stylesheet" type="text/css" />
+
+
+
+</h:head>
+<title>#{msgs['default.title']}</title>
+<body>
+		<h:form>
+		<nav class="navbar navbar-default navbar-inverse" role="navigation">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Issue Tracker</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active"><a
+						href="/IssueTrackerWeb/page/allissues.html"><b>#{msgs['nav.home']}</b></a>
+					</li>
+					
+					<c:if test="#{loginBean.logged eq true}">
+						<li><a href="/IssueTrackerWeb/page/selectedIssue.html"><b>#{msgs['nav.createissue']}</b></a>
+					</li>
+					</c:if>
+					
+					
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<c:if test="#{allIssuesBean.logon eq false}">
+						<li><a href="/IssueTrackerWeb/page/registeruser.html"><b>#{msgs['button.register']}</b></a>
+						</li>
+						<li><a href="/IssueTrackerWeb/page/login.html"><b>#{msgs['button.login']}</b></a>
+						</li>
+					</c:if>
+					<c:if test="#{allIssuesBean.logon eq true}">
+						<li><p class="navbar-text">#{msgs['hello.message']}</p></li>
+						<li><h:commandLink value="#{msgs['button.logout']}"
+								action="#{loginBean.logout()}" /></li>
+					</c:if>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid --> </nav>
+	</h:form>
+	
+	<h:form>
+		<p:outputPanel styleClass="alert alert-danger errorPanel"
+			rendered="#{detailsIssuesBean.hasErrors()}">
+			<p:messages autoUpdate="false" id="editParamMessages"
+				globalOnly="false" styleClass="messagesStyle" />
+		</p:outputPanel>
+
+
+
+		<p:panel header="#{msgs['panel.title.create.issue']}"
+			style="margin-bottom:10px;">
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<p:outputLabel for="title" value="#{msgs['lable.issue.title']}" />
+				<p:inputText id="title"
+					value="#{detailsIssuesBean.selectedIssue.title}" required="true"
+					requiredMessage="#{msgs.code_error_required}" readonly="true">
+					<f:validateLength maximum="400" />
+				</p:inputText>
+
+				<p:outputLabel for="date" value="#{msgs['lable.issue.date']}" />
+				<p:calendar id="date" value="#{detailsIssuesBean.selectedIssue.date}"
+					showOn="button" required="true"
+					requiredMessage="#{msgs.code_error_required}" readonly="true">
+
+				</p:calendar>
+
+				<p:outputLabel for="priority"
+					value="#{msgs['lable.issue.Priority']}" />
+				<p:inputText id="priority"
+					value="#{detailsIssuesBean.selectedIssue.priority}" required="true"
+					requiredMessage="#{msgs.code_error_required}" readonly="true">
+					<f:validateLength maximum="400" />
+				</p:inputText>
+
+				<p:outputLabel for="state" value="#{msgs['lable.issue.state']}" />
+				<p:inputText id="state"
+					value="#{detailsIssuesBean.selectedIssue.state}" required="true"
+					requiredMessage="#{msgs.code_error_required}" readonly="true">
+					<f:validateLength maximum="400" />
+				</p:inputText>
+
+
+				<p:outputLabel for="project" value="#{msgs['lable.issue.project']}" />
+				<p:inputText id="project"
+					value="#{detailsIssuesBean.selectedIssue.projectName}" required="true"
+					requiredMessage="#{msgs.code_error_required}" readonly="true">
+					<f:validateLength maximum="400" />
+				</p:inputText>
+
+
+				<p:outputLabel value="#{msgs['lable.issue.descr']}" />
+				
+				<p:editor id="descr"
+					value="#{detailsIssuesBean.selectedIssue.description}"
+					widgetVar="editor" width="600" required="true"
+					requiredMessage="#{msgs.code_error_required}">
+					<f:validateLength maximum="400"></f:validateLength>
+				</p:editor>
+
+
+			</h:panelGrid>
+
+		</p:panel>
+	</h:form>
+
+
+	<h:form>
+		<h:panelGroup id="allcomments">
+			<p:repeat var="comment" value="#{commentsBean.allComments}">
+				<p:panel header="#{comment.username}   #{comment.date}">
+					<h:outputText value="#{comment.text}" />
+				</p:panel>
+			</p:repeat>
+		</h:panelGroup>
+
+		<p:growl id="msg" showDetail="true" />
+
+		<p:panel header="Add comment" style="margin-bottom:10px;">
+
+			<p:outputLabel styleClass="comment-lable" for="txt" value="#{msgs['comment.username']}" />
+			<br />
+			
+			<p:inputText styleClass="comment-username" id="txt" value="#{commentsBean.commentCreator}"></p:inputText>
+			<br />
+			
+			<p:outputLabel styleClass="comment-lable" for="editor" value="#{msgs['comment.description']}" />
+		
+			<p:editor id="editor" value="#{commentsBean.addCommentDescription}"
+				widgetVar="editor" width="600" />
+
+
+			<p:commandButton styleClass="submit-comment" value="Submit" process="@this,editor,txt"
+				update="allcomments"
+				action="#{commentsBean.createComment(detailsIssuesBean.selectedIssue.id)}"
+				icon="ui-icon-check" ajax="true" />
+		</p:panel>
+
+		<p:remoteCommand update="allcomments" name="command" process="@this"
+			partialSubmit="true"
+			action="#{commentsBean.load(detailsIssuesBean.selectedIssue.id)}"
+			actionListener="#{commentsBean.load(detailsIssuesBean.selectedIssue.id)}"
+			autoRun="true" />
+	</h:form>
+</body>
+</html>

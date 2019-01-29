@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+
+	<link href="#{application.contextPath}/css/bootstrap.css"
+		rel="stylesheet" type="text/css" />
+
+	<link href="#{application.contextPath}/css/common.css" rel="stylesheet"
+		type="text/css" />
+</h:head>
+<title>#{msgs['default.title']}</title>
+<body id="editBody">
+
+	<h:form styleClass="editForm">
+		<p:outputPanel styleClass="alert alert-danger errorPanel"
+			rendered="#{editUserBean.hasErrors()}">
+			<p:messages autoUpdate="false" id="editParamMessages"
+				globalOnly="false" styleClass="messagesStyle" />
+		</p:outputPanel>
+
+		<h3 class="text-primary bold upper headPaddings">
+			<h:outputText value="#{msgs['edit.user.title']}" escape="false" />
+		</h3>
+		<p:panel>
+			<h:panelGrid columns="2" cellpadding="15">
+
+				<label for="username">#{msgs['label.username']}</label>
+				<p:inputText id="username" name="username" styleClass="editInput"
+					value="#{editUserBean.user.username}"
+					requiredMessage="#{msgs.code_error_required}">
+					<f:validateLength maximum="4000" />
+				</p:inputText>
+
+				<label for="password">#{msgs['label.password']}</label>
+				<p:password id="password" name="password" styleClass="editInput"
+					value="#{editUserBean.user.password}"
+					requiredMessage="#{msgs.code_error_required}">
+					<f:validateLength maximum="4000" />
+				</p:password>
+
+
+
+				<label for="firstName">#{msgs['label.firstName']}</label>
+				<p:inputText id="firstName" name="firstName" styleClass="editInput"
+					value="#{editUserBean.user.firstname}"
+					requiredMessage="#{msgs.code_error_required}">
+					<f:validateLength maximum="4000" />
+				</p:inputText>
+
+
+				<label for="lastName" class="editlabel">#{msgs['label.lastName']}</label>
+				<p:inputText id="lastName" name="lastName" styleClass="editInput"
+					value="#{editUserBean.user.lastname}"
+					requiredMessage="#{msgs.code_error_required}">
+					<f:validateLength maximum="4000" />
+				</p:inputText>
+
+
+
+				<label for="email">#{msgs['label.email']}</label>
+				<p:inputText id="email" name="email" styleClass="editInput"
+					value="#{editUserBean.user.email}"
+					requiredMessage="#{msgs.code_error_required}">
+					<f:validateLength maximum="4000" />
+				</p:inputText>
+
+			</h:panelGrid>
+			<p:separator />
+
+			<p:commandButton ajax="false" id="updateuserBtn"
+				styleClass="btn btn-primary createUserBtn"
+				value="#{msgs['button.edit']}"
+				action="#{editUserBean.edit()}">
+			</p:commandButton>
+		</p:panel>
+
+	</h:form>
+</body>
+</html>

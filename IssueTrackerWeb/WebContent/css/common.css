@@ -1,0 +1,369 @@
+table {
+	border-spacing: 20px;
+	border-collapse: separate;
+	padding-top: 4px;
+	padding-bottom: 5px;
+}
+
+.edit-table {
+	width: 365px;
+	height: 28px;
+}
+.edit-table td {
+	margin-left: 5px;
+}
+.comment-lable.ui-widget{
+	margin-bottom: 8px;
+}
+.submit-comment{
+	margin-top: 8px;
+}
+.dropdown{
+	min-width: 238px !important;
+}
+.comment-username.ui-widget{
+	margin-bottom: 10px;
+}
+table input.ui-inputfield,
+table td div {
+	margin: 3px;
+}
+.loginForm{
+    margin: 0 auto;
+    width: 40%;
+    text-align: center;
+}
+/* loginBody {
+	background: #364051;
+	height: 100%;
+	display: table;
+	width: 100%;
+}
+
+#commonBody {
+	background: #364051;
+	height: 100%;
+	display: table;
+	width: 80%;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle
+}
+
+.commonForm {
+	background: #EDEEF2;
+	border-radius: 4px;
+	padding: 10px 20px;
+	margin-bottom: -5px;
+	width: 80% !important;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle
+}
+
+
+#editBody {
+	background: #364051;
+	height: 100%;
+	display: table;
+	width: 80%;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle
+}
+
+.editForm {
+	background: #EDEEF2;
+	border-radius: 4px;
+	padding: 10px 20px;
+	margin-bottom: -5px;
+	width: 100% !important;
+	display: table;
+	text-align: center;
+	vertical-align: middle;
+	
+}
+
+.editBox{
+	width: 80% !important;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle
+}
+
+.editInput{
+	margin-left: 5px;
+}
+
+.editlabel{
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	display: table;
+}
+
+body {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#mainPageContent {
+	height: 100%;
+	vertical-align: middle;
+	margin-top: 12%;
+	width: 20%;
+	display: inline-block;
+	text-align: left;
+}
+
+#sidebar {
+	margin: 0 auto;
+	height: 400px;
+	width: 350px;
+}
+
+.loginTitle {
+	font-size: 1.5em;
+	line-height: -10%;
+	color: #44b6ae;
+	text-align: center;
+	border-radius: 3px 3px 0 0;
+}
+
+.loginForm {
+	background: #EDEEF2;
+	border-radius: 4px;
+	padding: 10px 20px;
+	margin-bottom: -5px;
+}
+
+.loginForm span.ui-messages-info-summary {
+	margin-left: 0px;
+}
+
+.loginForm div.alert-success ul {
+	margin: 0px;
+}
+
+.forgotPassForm ul {
+	margin: 0px;
+}
+
+.loginForm .ui-messages-error-summary {
+	margin-left: 0px;
+}
+
+.loginForm ul {
+	margin: 0px;
+}
+
+.forgotPassForm .ui-messages-error-summary {
+	margin-left: 0px;
+}
+
+.resetPassForm ul {
+	margin: 0px;
+}
+
+.resetPassForm .ui-messages-error-summary {
+	margin-left: 0px;
+}
+
+.loginInputField {
+	margin-bottom: 0.1%;
+	width: 100%;
+}
+
+.digiDialer {
+	background: #1C222B;
+	border-radius: 0 0 4px 4px;
+	width: 100%;
+	display: table;
+	height: 50px;
+}
+
+.loginMessage {
+	margin-bottom: 0px;
+}
+
+.digiDialerImg {
+	text-align: right;
+	margin: 10px 0;
+}
+
+.loginFooterDialerLogo {
+	vertical-align: middle; . logoDiv { width : 200px;
+	margin: auto;
+	overflow: hidden;
+}
+
+.leftSidebarLogo {
+	float: left;
+	width: 180px;
+	vertical-align: middle;
+	display: block;
+	padding-top: 40px;
+}
+
+.leftMenuIcons {
+	display: block;
+	margin-top: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: -20px;
+}
+
+.floatRight {
+	float: right;
+}
+
+.floatLeft {
+	float: left;
+	padding-left: 0px;
+}
+
+.graphicImageSize {
+	width: 20px;
+	height: 20px;
+}
+
+.actionColumn {
+	width: 75px;
+}
+
+.comboColumn {
+	width: 250px;
+}
+
+.marginRight5 {
+	margin-right: 5px;
+}
+
+.marginTop20 {
+	margin-top: 20px;
+}
+
+.marginTop25 {
+	margin-top: 25px;
+}
+
+.marginTop20m {
+	margin-top: -20px;
+}
+
+.marginBottom20 {
+	margin-bottom: 20px;
+}
+
+.mapperWrapper {
+	height: 390px;
+	overflow-y: scroll;
+}
+
+.paddingBottom20 {
+	padding-bottom: 20px;
+}
+
+.placeholders {
+	font-size: 10px;
+	font-style: italic;
+	color: gray;
+}
+
+.marginTop10 {
+	margin-top: 10px;
+}
+
+.htmlSystemDefault {
+	float: right;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.textSystemDefault {
+	float: right;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.characterCount {
+	font-size: 12px;
+	color: gray;
+	float: right;
+	margin-right: 25px;
+}
+
+.characterCountText {
+	font-size: 12px;
+	color: gray;
+}
+
+.buttonPanel {
+	display: table-row-group;
+	vertical-align: bottom;
+}
+
+.buttonPanel .col-md-12 {
+	padding: 0px !important;
+}
+
+.fieldset {
+	padding: 15px 5px 15px 0px;
+	background: white !important;
+	box-shadow: 1px 1px 1px 1px #dddddd;
+}
+
+.listUsersTable .table {
+	margin-bottom: 0px !important;
+}
+
+#listUsersTable table {
+	table-layout: auto !important;
+	text-align: center !important
+}
+
+
+.box-field {
+	padding-bottom: 12px;
+	padding-left: 12px;
+	margin-bottom: 10px !important;
+}
+
+.box-field label {
+	display: block;
+}
+
+.box-field select {
+	width: 96%;
+}
+
+
+decorated {
+	border-radius: 5px;
+	box-shadow: 1px 1px 1px 1px #dddddd;
+	margin-right: 15px;
+	padding-left: 0px;
+	padding-right: 0px;
+	background-color: white;
+	margin-top: 20px;
+}
+
+.datatable table {
+	margin-bottom: 0px;
+}
+
+input.underlined {
+	border-top: 0px !important;
+	border-right: 0px !important;
+	border-left: 0px !important;
+	border-bottom: 1px solid black !important;
+	width: 96% !important;
+	border-radius: 0px !important;
+	box-shadow: none !important;
+}
+ */
